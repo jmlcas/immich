@@ -5,7 +5,6 @@ services:
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
-      - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
     ports:
@@ -19,10 +18,10 @@ services:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION:-release}
     volumes:
-      - model-cache:/cache
+      - ./model-cache:/cache
     env_file:
       - .env
-    restart: unless.stopped
+    restart: unless-stopped
 
   redis:
     container_name: immich_redis
@@ -49,5 +48,3 @@ services:
     command: ["postgres", "-c" ,"shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
     restart: unless-stopped
 
-volumes:
-  model-cache:
