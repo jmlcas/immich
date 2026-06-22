@@ -1,4 +1,3 @@
-# Immich - Multimedia
+# Immich 
 
-Ver en "localhost:8200"
-
+Ver en "http://ocalhost:8200"
